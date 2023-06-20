@@ -17,7 +17,7 @@ int print_last_digit(int a)
 	a = -a;
 	i = a % 10;
 
-	if i < 0
+	if (i < 0)
 		i = -i;
 
 	_putcha(i + '0');
