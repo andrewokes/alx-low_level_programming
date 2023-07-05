@@ -1,13 +1,19 @@
 #include "main.h"
+
 /**
- * _print_rev_recursion - a function that prints a string
- * @s: The string to be printed.
+ * _puts_recursion - prints a string, followed by a new line
+ * @s: pointer to the string to print
+ *
+ * Return: void
  */
-void _print_rev_recursion(char *s)
+void _puts_recursion(char *s)
 {
-	if (*s)
+	if (*s == '\0')
 	{
-		_print_rev_recursion(s + 1);
-		_putchar(*s);
+		_putchar('\n');
+		return;
 	}
+
+	_putchar(*s);
+	_puts_recursion(s + 1);
 }
