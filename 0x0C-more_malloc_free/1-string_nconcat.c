@@ -11,35 +11,35 @@
  */
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	unsigned int len1 = 0, len2 = 0;
-	unsigned int totalLength;
-	unsigned int i, j;
 	char *s;
+	unsigned int i = 0, len1 = 0, len2 = 0;
 
-	/* Calculate the lengths of s1 and s2 */
-	for (len1 = 0; s1 && s1[len1]; len1++)
-		;
-	for (len2 = 0; s2 && s2[len2]; len2++)
-		;
+	while (s1 && s1[len1])
 
-	/* Determine the total length of the resulting string */
-	totalLength = len1 + (n < len2 ? n : len2);
+		len1++;
 
-	/* Allocate memory for the resulting string */
-	s = malloc(sizeof(char) * (totalLength + 1));
+	while (s2 && s2[len2])
+
+		len2++;
+
+	if (n < len2)
+	s = malloc(sizeof(char) * (len1 + n + 1));
+	else
+	s = malloc(sizeof(char) * (len1 + len2 + 1));
 
 	if (!s)
-		return (NULL);
+	return (NULL);
 
-	/* Copy characters from s1 to s */
-	for (i = 0; i < len1; i++)
-		s[i] = s1[i];
+	while (*s1)
+	{
+	s[i++] = *s1++;
+	}
 
-	/* Copy n bytes from s2 to s */
-	for (j = 0; j < n && s2[j] != '\0'; j++)
-		s[i++] = s2[j];
+	while (n-- && *s2)
+	{
+	s[i++] = *s2++;
+	}
 
-	/* Null-terminate the resulting string */
 	s[i] = '\0';
 
 	return (s);
