@@ -1,5 +1,5 @@
 section .data
-hello db 'Hello, Holberton', 0xA  ; The message to be printed followed by a new line character
+hello db 'Hello, Holberton', 10  ; The message to be printed followed by a new line character
 len equ $ - hello                ; Calculate the length of the message
 
 section .text
