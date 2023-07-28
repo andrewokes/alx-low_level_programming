@@ -2,10 +2,10 @@
 #include "lists.h"
 
 /**
- * list_len - returns the number of elements in a linked list
- * @h: pointer to the list_t list
+ * list_len - Counts the number of elements in a linked list.
+ * @h: A pointer to the list_t linked list.
  *
- * Return: number of elements in h
+ * Return: The number of elements in the linked list.
  */
 size_t list_len(const list_t *h)
 {
