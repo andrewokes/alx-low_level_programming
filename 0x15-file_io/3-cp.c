@@ -13,18 +13,18 @@ void close_file(int fd);
 */
 char *create_buffer(char *file)
 {
-char *new_buffer;
+char *buffer;
 
-new_buffer = malloc(sizeof(char) * 1024);
+buffer = malloc(sizeof(char) * 1024);
 
-if (new_buffer == NULL)
+if (buffer == NULL)
 {
 dprintf(STDERR_FILENO,
 "Error: Can't write to %s\n", file);
 exit(99);
 }
 
-return (new_buffer);
+return (buffer);
 }
 /**
 * close_file - A function that closes file descriptors.
@@ -56,8 +56,8 @@ exit(100);
 */
 int main(int argc, char *argv[])
 {
-int from, to, i, j;
-char *new_buffer;
+int from, to, r, w;
+char *buffer;
 
 if (argc != 3)
 {
@@ -65,34 +65,35 @@ dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
 exit(97);
 }
 
-new_buffer = create_buffer(argv[2]);
+buffer = create_buffer(argv[2]);
 from = open(argv[1], O_RDONLY);
-i = read(from, new_buffer, 1024);
+r = read(from, buffer, 1024);
 to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
 
-for (; i > 0; i = read(from, new_buffer, 1024))
-{
-if (from == -1 || i == -1)
+do {
+if (from == -1 || r == -1)
 {
 dprintf(STDERR_FILENO,
 "Error: Can't read from file %s\n", argv[1]);
-free(new_buffer);
+free(buffer);
 exit(98);
 }
 
-j = write(to, new_buffer, i);
-if (to == -1 || j == -1)
+w = write(to, buffer, r);
+if (to == -1 || w == -1)
 {
 dprintf(STDERR_FILENO,
 "Error: Can't write to %s\n", argv[2]);
-free(new_buffer);
+free(buffer);
 exit(99);
 }
 
+r = read(from, buffer, 1024);
 to = open(argv[2], O_WRONLY | O_APPEND);
-}
 
-free(new_buffer);
+} while (r > 0);
+
+free(buffer);
 close_file(from);
 close_file(to);
 
