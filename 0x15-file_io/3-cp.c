@@ -56,7 +56,7 @@ exit(100);
 */
 int main(int argc, char *argv[])
 {
-int from, to, r, w;
+int from, to, i, j;
 char *buffer;
 
 if (argc != 3)
@@ -67,11 +67,11 @@ exit(97);
 
 buffer = create_buffer(argv[2]);
 from = open(argv[1], O_RDONLY);
-r = read(from, buffer, 1024);
+i = read(from, buffer, 1024);
 to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
 
 do {
-if (from == -1 || r == -1)
+if (from == -1 || i == -1)
 {
 dprintf(STDERR_FILENO,
 "Error: Can't read from file %s\n", argv[1]);
@@ -79,8 +79,8 @@ free(buffer);
 exit(98);
 }
 
-w = write(to, buffer, r);
-if (to == -1 || w == -1)
+j = write(to, buffer, i);
+if (to == -1 || j == -1)
 {
 dprintf(STDERR_FILENO,
 "Error: Can't write to %s\n", argv[2]);
@@ -88,10 +88,10 @@ free(buffer);
 exit(99);
 }
 
-r = read(from, buffer, 1024);
+i = read(from, buffer, 1024);
 to = open(argv[2], O_WRONLY | O_APPEND);
 
-} while (r > 0);
+} while (i > 0);
 
 free(buffer);
 close_file(from);
